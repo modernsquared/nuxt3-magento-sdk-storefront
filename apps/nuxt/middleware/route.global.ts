@@ -1,5 +1,5 @@
 import {sdk} from "~/sdk.config"
-import {RoutableInterface} from "@vue-storefront/magento-types";
+import type {RoutableInterface} from "@vue-storefront/magento-types";
 
 interface ExtendedRoutableInterface extends RoutableInterface {
     sku: string | undefined;

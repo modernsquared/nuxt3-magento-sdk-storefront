@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { SfSelect } from '@storefront-ui/vue';
-import { CategoryTree } from '@vue-storefront/magento-types';
+import type { CategoryTree } from '@vue-storefront/magento-types';
 
 type Props = {
   children?: CategoryTree

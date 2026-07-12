@@ -49,7 +49,7 @@ import {
     SfIconShoppingCart,
     SfIconFavorite
 } from '@storefront-ui/vue';
-import { Product } from '@vue-storefront/magento-types';
+import type { Product } from '@vue-storefront/magento-types';
 import { getDisplayPrice, getProductPath } from '~/modules/catalog/product/getters/productGetters'
 import {NuxtLink} from "#components";
 
