@@ -1,7 +1,5 @@
 # The Next Magento Storefront from Vue Storefront
 
-![Image](https://user-images.githubusercontent.com/45824492/245919144-03993fa2-1061-4c24-8e38-4be806725131.png)
-
 A boilerplate storefront built with the Vue Storefront Magento 2 Integration and Storefront UI 2
 
 🚧 This repo is under heavy development. Expect breaking changes regularly. Do not use for production 🚧
