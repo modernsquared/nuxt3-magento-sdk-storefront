@@ -1,6 +1,9 @@
 import {config} from "dotenv";
+import consola from "consola";
 
 config();
+
+const originalFetch = globalThis.fetch;
 
 const cookieNames = {
     currencyCookieName: 'vsf-currency',
@@ -57,6 +60,24 @@ export const integrations = {
             defaultStore: 'default',
             customApolloHttpLinkOptions: {
                 useGETForQueries: true,
+                fetch: (url, options) => {
+                    if (process.env.VSF_DEBUG_GRAPHQL === 'true') {
+                        try {
+                            const u = typeof url === 'string' ? url : url.toString();
+                            const parsed = new URL(u, 'http://localhost');
+                            const queryParam = parsed.searchParams.get('query');
+                            if (queryParam) {
+                                consola.info('[GraphQL query] ' + decodeURIComponent(queryParam).replace(/\n\s*/g, ' '));
+                            } else if (options?.body) {
+                                const body = typeof options.body === 'string' ? JSON.parse(options.body) : options.body;
+                                if (body?.query) {
+                                    consola.info('[GraphQL query] ' + body.query.replace(/\n\s*/g, ' '));
+                                }
+                            }
+                        } catch (_) {}
+                    }
+                    return originalFetch(url, options);
+                },
             },
             magentoBaseUrl: process.env.VSF_MAGENTO_BASE_URL,
             magentoApiEndpoint: process.env.VSF_MAGENTO_GRAPHQL_URL,
