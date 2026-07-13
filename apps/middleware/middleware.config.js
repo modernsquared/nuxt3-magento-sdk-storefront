@@ -59,7 +59,7 @@ export const integrations = {
             },
             defaultStore: 'default',
             customApolloHttpLinkOptions: {
-                useGETForQueries: true,
+                useGETForQueries: false,
                 fetch: (url, options) => {
                     if (process.env.VSF_DEBUG_GRAPHQL === 'true') {
                         try {
