@@ -34,14 +34,17 @@ watch(routeData, () => {
   categoryParam.value = routeData.value.uid
 }, { immediate: true, deep: true })
 
-const { data } = await useAsyncData(`category${categoryParam.value}`, async () => await sdk.magento.categorySearch({
-  filters: {
-    category_uid: {
-      in: [categoryParam.value],
-    },
-  }
-}, { customQuery }), { watch: [categoryParam] })
+const { data } = await useAsyncData(`category${categoryParam.value}`, async () => {
+  if (!categoryParam.value) return null;
+  return await sdk.magento.categorySearch({
+    filters: {
+      category_uid: {
+        in: [categoryParam.value],
+      },
+    }
+  }, { customQuery })
+}, { watch: [categoryParam] })
 
-const children = data.value?.data.categoryList?.[0].children
+const children = data.value?.data?.categoryList?.[0]?.children
 const productList = computed(() => data.value?.data?.categoryList?.[0]?.products?.items)
 </script>
