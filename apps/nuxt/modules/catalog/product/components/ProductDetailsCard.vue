@@ -41,11 +41,11 @@
             <strong class="text-neutral-900">{{ max }}</strong> in stock
           </p>
         </div>
-        <SfButton type="button" size="lg" class="w-full xs:ml-4">
+        <SfButton type="button" size="lg" class="w-full xs:ml-4" :disabled="addingToCart" @click="handleAddToCart">
           <template #prefix>
             <SfIconShoppingCart size="sm" />
           </template>
-          Add to cart
+          {{ addingToCart ? 'Adding...' : 'Add to cart' }}
         </SfButton>
       </div>
       <div class="flex justify-center mt-4 gap-x-4">
@@ -122,6 +122,20 @@ const min = ref(1);
 const max = ref(999);
 const { count, inc, dec, set } = useCounter(1, { min: min.value, max: max.value });
 const displayPrice = computed(() => getDisplayPrice(product))
+
+const { addToCart } = useCart();
+const addingToCart = ref(false);
+
+async function handleAddToCart() {
+    addingToCart.value = true;
+    try {
+        await addToCart(product.sku, count.value);
+    } catch (e) {
+        console.error('Failed to add to cart:', e);
+    } finally {
+        addingToCart.value = false;
+    }
+}
 
 function handleOnChange(event: Event) {
   const currentValue = (event.target as HTMLInputElement)?.value;

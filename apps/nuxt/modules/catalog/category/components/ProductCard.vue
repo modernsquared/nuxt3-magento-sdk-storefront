@@ -26,11 +26,11 @@
             <span class="block pb-2 font-bold typography-text-lg">{{ displayPrice }}</span>
             <div class="flex flex-col">
                 <div class="mb-2">
-                    <SfButton type="button" size="sm">
+                    <SfButton type="button" size="sm" :disabled="addingToCart" @click="handleAddToCart">
                         <template #prefix>
                             <SfIconShoppingCart size="sm" />
                         </template>
-                        Add to cart
+                        {{ addingToCart ? 'Adding...' : 'Add to cart' }}
                     </SfButton>
                 </div>
             </div>
@@ -41,6 +41,7 @@
 
 <script lang="ts" setup>
 import { MAX_AVERAGE_RATING, FALLBACK_RATING, RATING_CONVERSION_FACTOR } from '~/helpers/constants'
+import { ref } from 'vue';
 import {
     SfRating,
     SfCounter,
@@ -57,4 +58,18 @@ const props = defineProps<{ product: Product }>()
 const product = props.product
 const displayPrice = computed(() => getDisplayPrice(product))
 const productPath = computed(() => getProductPath(product))
+
+const { addToCart } = useCart();
+const addingToCart = ref(false);
+
+async function handleAddToCart() {
+    addingToCart.value = true;
+    try {
+        await addToCart(product.sku, 1);
+    } catch (e) {
+        console.error('Failed to add to cart:', e);
+    } finally {
+        addingToCart.value = false;
+    }
+}
 </script>
