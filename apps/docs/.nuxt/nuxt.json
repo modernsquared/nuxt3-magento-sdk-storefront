@@ -1,9 +1,9 @@
 {
-  "_hash": "yav6Ln3mBv",
+  "_hash": "ZldXuHEyERtzrNIbnRuhXY_hyuwZ-bGIXZqSftU_RjM",
   "project": {
-    "rootDir": "/Users/richardrohrig/m2/nuxt3-magento-sdk-storefront/apps/docs"
+    "rootDir": "/home/przemek/PCODE-pl/zadania-alokai/nuxt3-magento-sdk-storefront/apps/docs"
   },
   "versions": {
-    "nuxt": "3.5.3"
+    "nuxt": "3.21.8"
   }
 }

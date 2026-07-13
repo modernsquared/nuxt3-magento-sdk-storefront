@@ -2,16 +2,235 @@
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "allowJs": true,
     "resolveJsonModule": true,
-    "paths": {}
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "paths": {
+      "#imports": [
+        "./types/nitro-imports"
+      ],
+      "~/*": [
+        "../*"
+      ],
+      "@/*": [
+        "../*"
+      ],
+      "~~/*": [
+        "../*"
+      ],
+      "@@/*": [
+        "../*"
+      ],
+      "vue-router": [
+        "../../../node_modules/vue-router"
+      ],
+      "vue-router/auto-routes": [
+        "../../../node_modules/vue-router/vue-router-auto-routes"
+      ],
+      "nuxt": [
+        "../node_modules/nuxt"
+      ],
+      "@unhead/vue": [
+        "../../../node_modules/@unhead/vue"
+      ],
+      "@nuxt/devtools": [
+        "../../../node_modules/@nuxt/devtools"
+      ],
+      "vue": [
+        "../../../node_modules/vue"
+      ],
+      "@vue/runtime-core": [
+        "../../../node_modules/@vue/runtime-core"
+      ],
+      "@vue/compiler-sfc": [
+        "../../../node_modules/@vue/compiler-sfc"
+      ],
+      "@nuxt/schema": [
+        "../node_modules/@nuxt/schema"
+      ],
+      "defu": [
+        "../../../node_modules/defu"
+      ],
+      "h3": [
+        "../../../node_modules/h3"
+      ],
+      "consola": [
+        "../../../node_modules/consola"
+      ],
+      "ofetch": [
+        "../../../node_modules/ofetch"
+      ],
+      "crossws": [
+        "../../../node_modules/crossws"
+      ],
+      "unplugin-vue-router/client": [
+        "../../../node_modules/unplugin-vue-router/client"
+      ],
+      "nitropack": [
+        "../../../node_modules/nitropack"
+      ],
+      "vite/client": [
+        "../../../node_modules/vite/client"
+      ],
+      "nitropack/types": [
+        "../../../node_modules/nitropack/types"
+      ],
+      "nitropack/runtime": [
+        "../../../node_modules/nitropack/runtime"
+      ],
+      "#shared": [
+        "../shared"
+      ],
+      "#shared/*": [
+        "../shared/*"
+      ],
+      "assets": [
+        "../assets"
+      ],
+      "assets/*": [
+        "../assets/*"
+      ],
+      "public": [
+        "../public"
+      ],
+      "public/*": [
+        "../public/*"
+      ],
+      "#server": [
+        "../server"
+      ],
+      "#server/*": [
+        "../server/*"
+      ],
+      "#build": [
+        "./"
+      ],
+      "#build/*": [
+        "./*"
+      ],
+      "#internal/nuxt/paths": [
+        "../node_modules/nuxt/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths"
+      ],
+      "#mdc-configs": [
+        "./mdc-configs"
+      ],
+      "#mdc-highlighter": [
+        "./mdc-highlighter"
+      ],
+      "#mdc-imports": [
+        "./mdc-imports"
+      ],
+      "#color-mode-options": [
+        "./color-mode-options.mjs"
+      ],
+      "#site-config": [
+        "../../../node_modules/nuxt-site-config/dist/runtime"
+      ],
+      "#site-config/*": [
+        "../../../node_modules/nuxt-site-config/dist/runtime/*"
+      ],
+      "#robots": [
+        "../../../node_modules/@nuxtjs/robots/dist/runtime"
+      ],
+      "#robots/*": [
+        "../../../node_modules/@nuxtjs/robots/dist/runtime/*"
+      ],
+      "#sitemap": [
+        "../../../node_modules/@nuxtjs/sitemap/dist/runtime"
+      ],
+      "#sitemap/*": [
+        "../../../node_modules/@nuxtjs/sitemap/dist/runtime/*"
+      ],
+      "#schema-org": [
+        "../../../node_modules/nuxt-schema-org/dist/runtime"
+      ],
+      "#schema-org/*": [
+        "../../../node_modules/nuxt-schema-org/dist/runtime/*"
+      ],
+      "#link-checker": [
+        "../../../node_modules/nuxt-link-checker/dist/runtime"
+      ],
+      "#link-checker/*": [
+        "../../../node_modules/nuxt-link-checker/dist/runtime/*"
+      ],
+      "#unhead/composables": [
+        "../node_modules/nuxt/dist/head/runtime/composables/v3"
+      ],
+      "#internal/nuxt-site-config": [
+        "../../../node_modules/nuxt-site-config/dist/runtime/server/composable-barrel-deprecated"
+      ],
+      "#internal/nuxt-simple-robots": [
+        "../../../node_modules/@nuxtjs/robots/dist/runtime/server/composables"
+      ],
+      "#internal/nuxt-simple-robots/*": [
+        "../../../node_modules/@nuxtjs/robots/dist/runtime/server/composables/*"
+      ],
+      "#internal/nuxt-robots": [
+        "../../../node_modules/@nuxtjs/robots/dist/runtime/server/composables"
+      ],
+      "#internal/nuxt-robots/*": [
+        "../../../node_modules/@nuxtjs/robots/dist/runtime/server/composables/*"
+      ],
+      "#link-checker/content-provider": [
+        "../../../node_modules/nuxt-link-checker/dist/runtime/server/providers/content-v2"
+      ],
+      "#content/server": [
+        "../../../node_modules/@nuxt/content/dist/runtime/legacy/server"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "webworker",
+      "dom.iterable"
+    ],
+    "noUncheckedIndexedAccess": true,
+    "allowArbitraryExtensions": true
   },
   "include": [
+    "./types/nitro-nuxt.d.ts",
+    "../../../node_modules/runtime/server",
+    "../../../node_modules/dist/runtime/server",
+    "../../../node_modules/sf-docs-base/node_modules/runtime/server",
+    "../../../node_modules/sf-docs-base/node_modules/dist/runtime/server",
+    "../server/**/*",
+    "../../../node_modules/sf-docs-base/server/**/*",
+    "../shared/**/*.d.ts",
+    "../../../node_modules/sf-docs-base/shared/**/*.d.ts",
     "./types/nitro.d.ts",
-    "../**/*",
-    "../server/**/*"
+    "../**/*"
+  ],
+  "exclude": [
+    "../node_modules",
+    "../../../node_modules",
+    "../node_modules/nuxt/node_modules",
+    "../../../node_modules/sf-docs-base/node_modules",
+    "../../../node_modules/nuxt-gtag/node_modules",
+    "../../../node_modules/@nuxtjs/algolia/node_modules",
+    "../../../node_modules/@nuxtjs/mdc/node_modules",
+    "../../../node_modules/@nuxt/content/node_modules",
+    "../../../node_modules/@nuxtjs/tailwindcss/node_modules",
+    "../../../node_modules/nuxt-icon/node_modules",
+    "../../../node_modules/@nuxtjs/color-mode/node_modules",
+    "../../../node_modules/sf-docs-base/node_modules/@vueuse/nuxt/node_modules",
+    "../../../node_modules/nuxt-config-schema/node_modules",
+    "../../../node_modules/nuxt-site-config/node_modules",
+    "../../../node_modules/@nuxtjs/robots/node_modules",
+    "../../../node_modules/@nuxtjs/sitemap/node_modules",
+    "../../../node_modules/nuxt-og-image/node_modules",
+    "../../../node_modules/nuxt-schema-org/node_modules",
+    "../../../node_modules/nuxt-link-checker/node_modules",
+    "../../../node_modules/nuxt-seo-utils/node_modules",
+    "../../../node_modules/@nuxtjs/seo/node_modules",
+    "../../../node_modules/@nuxt/devtools/node_modules",
+    "../../../node_modules/@nuxt/telemetry/node_modules",
+    "../dist"
   ]
 }
