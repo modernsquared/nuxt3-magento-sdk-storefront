@@ -1,4 +1,4 @@
-import { UseImageInterface } from './useImage';
+import type { UseImageInterface } from './useImage';
 
 const imageSizes = {
   productCard: {
