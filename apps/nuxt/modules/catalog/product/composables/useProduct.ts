@@ -4,8 +4,8 @@ import {customProductQuery} from '~/modules/catalog/product/customQueries/custom
 
 export default function () {
     const search = async (term: string) => {
-        const {data, pending, refresh} = await useAsyncData('data', async () => {
-            console.log('refreshing products', search, term)
+        const products = useState('products')
+        const {data, pending, refresh} = await useAsyncData('productSearch', async () => {
             return await sdk.magento.products({
                 pageSize: 8,
                 currentPage: 1,
@@ -16,7 +16,6 @@ export default function () {
             })
         })
 
-        const products = useState('products')
         products.value = data.value?.data.products?.items
 
         return {
@@ -27,7 +26,7 @@ export default function () {
     }
 
     const getProduct = async (sku: string) => {
-        const {data, pending, refresh} = await useAsyncData('data', async () => await sdk.magento.products({
+        const {data, pending, refresh} = await useAsyncData(`product-${sku}`, async () => await sdk.magento.products({
             filter: {
                 sku: {
                     eq: sku
@@ -44,8 +43,8 @@ export default function () {
     }
 
     const getProductDetails = async (sku: string) => {
-        const {data, pending, refresh} = await useAsyncData('data', async () => {
-            console.log('fetching product by sku', getProductDetails, sku)
+        const productDetails = useState('productDetails')
+        const {data, pending, refresh} = await useAsyncData(`productDetails-${sku}`, async () => {
             return await sdk.magento.productDetails({
                 filter: {
                     sku: {
@@ -55,7 +54,6 @@ export default function () {
             })
         })
 
-        const productDetails = useState('productDetails')
         productDetails.value = data.value?.data?.products?.items?.[0]
 
         return {
