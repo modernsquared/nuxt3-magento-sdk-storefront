@@ -6,10 +6,34 @@ interface ExtendedRoutableInterface extends RoutableInterface {
     uid: string | undefined;
 }
 
+const getCookie = (cookieHeader: string | undefined, cookieName: string) =>
+    cookieHeader
+        ?.split(';')
+        .map((cookie) => cookie.trim())
+        .find((cookie) => cookie.startsWith(`${cookieName}=`));
+
 export default defineNuxtRouteMiddleware(async (to, from) => {
 
     try {
-        const mageRoute = await sdk.magento.route({url: to.path})
+        const config = useRuntimeConfig();
+        const xdebugSessionCookie = import.meta.server && config.forwardXdebugSession
+            ? getCookie(
+                useRequestHeaders(['cookie']).cookie,
+                config.xdebugSessionCookieName
+            )
+            : undefined;
+        const mageRoute = await sdk.magento.route(
+            {url: to.path},
+            xdebugSessionCookie
+                ? {
+                    clientConfig: {
+                        headers: {
+                            Cookie: xdebugSessionCookie,
+                        },
+                    },
+                }
+                : undefined
+        )
         const route = mageRoute?.data?.route as ExtendedRoutableInterface
         const routeData = {
             type: route?.type,

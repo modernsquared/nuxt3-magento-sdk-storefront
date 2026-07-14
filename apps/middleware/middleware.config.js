@@ -12,12 +12,59 @@ const cookieNames = {
     cartCookieName: 'vsf-cart',
     customerCookieName: 'vsf-customer',
     storeCookieName: 'vsf-store',
-    messageCookieName: 'vsf-message'
+    messageCookieName: 'vsf-message',
+    xdebugSessionCookieName: process.env.VSF_XDEBUG_SESSION_COOKIE_NAME || 'XDEBUG_SESSION'
+};
+
+const isXdebugSessionForwardingEnabled = process.env.VSF_FORWARD_XDEBUG_SESSION === 'true';
+
+const getCookie = (cookieHeader, cookieName) => cookieHeader
+    ?.split(';')
+    .map((cookie) => cookie.trim())
+    .find((cookie) => cookie.startsWith(`${cookieName}=`));
+
+const xdebugSessionExtension = {
+    name: 'xdebugSessionExtension',
+    hooks: (req) => ({
+        beforeCreate: ({ configuration }) => {
+            if (!isXdebugSessionForwardingEnabled) {
+                return configuration;
+            }
+
+            const xdebugSessionCookie = getCookie(
+                req.headers.cookie,
+                configuration.cookies.xdebugSessionCookieName
+            );
+
+            if (!xdebugSessionCookie) {
+                return configuration;
+            }
+
+            const fetch = configuration.customApolloHttpLinkOptions?.fetch || originalFetch;
+
+            return {
+                ...configuration,
+                customApolloHttpLinkOptions: {
+                    ...configuration.customApolloHttpLinkOptions,
+                    fetch: (url, options) => {
+                        const headers = new Headers(options?.headers);
+                        headers.set('cookie', xdebugSessionCookie);
+
+                        return fetch(url, {
+                            ...options,
+                            headers,
+                        });
+                    },
+                },
+            };
+        },
+    }),
 };
 
 export const integrations = {
     magento: {
         location: '@vue-storefront/magento-api/server',
+        extensions: (extensions) => [...extensions, xdebugSessionExtension],
         customQueries: {
             'category-search-custom-query': ({ variables, metadata }) => ({
                variables,
